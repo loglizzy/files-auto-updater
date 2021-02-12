@@ -29,7 +29,9 @@ else
         Library = loadstring(game:HttpGet(LibLink))()
     end)
     
-    warn('Cannot load ui library, try again')
+    if not sucess then
+        warn('Cannot load ui library, try again')
+    end
 end
 
 spawn(function()
