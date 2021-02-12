@@ -1,20 +1,21 @@
 -- loglizzy#3431
 
+local FileName = 'ShowerLib.lua'
 local LibLink = 'https://fluxteam.xyz/scripts/others/ShowerHeadLibrary.lua'
 local Body
 local ShowerLib
 
 if syn then
     local success = pcall(function()
-        if isfile('ShowerLib.lua') then
-            local content = readfile('ShowerLib.lua')
+        if isfile(FileName) then
+            local content = readfile(FileName)
             ShowerLib = loadstring(content)()
             Body = content
         else
             print('Creating cache in workspace for futher times...')
             local request = game:HttpGet(LibLink)
-            writefile('ShowerLib.lua', request)
-            ShowerLib = loadstring(readfile('ShowerLib.lua'))()
+            writefile(FileName, request)
+            ShowerLib = loadstring(readfile(FileName))()
             Body = request
             print('Successfully created cache and loaded the lib')
         end
@@ -29,7 +30,6 @@ else
     end)
     
     warn('Cannot load ui library, try again')
-    return
 end
 
 spawn(function()
@@ -38,9 +38,9 @@ spawn(function()
         if Body ~= content then
             print('Detected changes in the lib script, updating cache...')
             local sucess = pcall(function()
-                if isfile('ShowerLib.lua') then
-                    writefile('ShowerLib.lua', game:HttpGet(LibLink))
-                    ShowerLib = loadstring(readfile('ShowerLib.lua'))()
+                if isfile(FileName) then
+                    writefile(FileName, game:HttpGet(LibLink))
+                    ShowerLib = loadstring(readfile(FileName))()
                 end
             end)
             if sucess then
